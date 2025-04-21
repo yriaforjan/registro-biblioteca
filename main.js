@@ -30,7 +30,10 @@ const guardarLibro = () => {
     const disponibilidadSelecionada = document.querySelector("input[name='availability']:checked");
     const disponibilidad = document.querySelector("label[for='"+disponibilidadSelecionada.id+"']").textContent;
 
-    if(esLibroDuplicado(titulo, autor)){
+    if (!titulo || !autor || !fechaPublicacion || !disponibilidadSelecionada) {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }else if(esLibroDuplicado(titulo, autor)){
         alert("Este libro ya existe en la biblioteca.");
         return;
     };
