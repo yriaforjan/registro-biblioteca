@@ -144,6 +144,11 @@ updateBtn.addEventListener("click", (ev)=>{
     const disponibilidadSeleccionada = document.querySelector("input[name='availability']:checked");
     const disponibilidad = document.querySelector("label[for='"+disponibilidadSeleccionada.id+"']").textContent;
 
+    if (!titulo || !autor || !fechaPublicacion || !disponibilidadSeleccionada) {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }
+    
     const libro = {
         titulo,
         autor,
@@ -181,6 +186,7 @@ fileInput.addEventListener("change", (ev) => {
         const xml = parser.parseFromString(xmlString, "application/xml");
         const librosXML = xml.querySelectorAll("libro");
         let duplicadosCount = 0;
+        let invalidBooks = false;
 
         librosXML.forEach((libroXML) => {
             const tituloXML = libroXML.querySelector("titulo");
@@ -192,6 +198,11 @@ fileInput.addEventListener("change", (ev) => {
             const autor = autorXML ? autorXML.textContent : "";
             const fechaPublicacion = fechaPublicacionXML ? fechaPublicacionXML.textContent : "";
             const disponibilidad = disponibilidadXML ? disponibilidadXML.textContent : "";
+
+            if (!titulo || !autor || !fechaPublicacion || !disponibilidad) {
+                invalidBooks = true;
+                return;
+            }
 
             if(esLibroDuplicado(titulo, autor)){
                 duplicadosCount++;
@@ -208,9 +219,17 @@ fileInput.addEventListener("change", (ev) => {
             libros.push(libro);
         });
 
-        if(duplicadosCount>0){
-            alert(`Se encontraron ${duplicadosCount} libros duplicados que no fueron importados.`);
-        };
+        let errorMessage = "";
+        if (invalidBooks) {
+            errorMessage += "Algunos libros tienen campos vacíos y no fueron importados.\n";
+        }
+        if (duplicadosCount>0) {
+            errorMessage += `Se encontraron ${duplicadosCount} libros duplicados que no fueron importados.`;
+        }
+        
+        if (errorMessage) {
+            alert(errorMessage);
+        }
 
         actualizarTabla(libros);
         localStorage.setItem("libros", JSON.stringify(libros));
