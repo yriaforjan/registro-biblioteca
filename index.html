@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplicación para gestionar los libros de tu biblioteca. Guarda, importa y exporta fácilmente.">
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="main.js" defer></script>
+    <title>Biblioteca Marioneta</title>
+</head>
+<body class="m-4">
+    <header class="p-4 text-center">
+        <h1 class="display-1 fw-bold">Biblioteca Marioneta</h1>
+        <img src="/assets/logo.png"  alt="logo" class="img-fluid" style="max-width: 200px;">
+    </header>
+    <main>
+        <form id="form" class="container mt-4">
+            <h3 class="h3 text-center mb-4">Registrar nuevo libro</h3>
+            <div class="row mb-3">
+                <label for="title" class="col-sm-2 col-form-label">Título</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="title" required>
+                </div> 
+            </div>
+            <div class="row mb-3">
+                <label for="author" class="col-sm-2 col-form-label">Autor</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="author" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="publicationYear" class="col-sm-2 col-form-label">Año de publicación</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="publicationYear" required>
+                </div>
+            </div>
+            <fieldset class="row mb-3">
+                <legend class="col-form-label col-sm-2 pt-0">Disponibilidad</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="availability" id="available" value="available" checked>
+                        <label class="form-check-label" for="available">Disponible</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="availability" id="nonAvailable" value="nonAvailable">
+                        <label class="form-check-label" for="nonAvailable">No disponible</label>
+                    </div>
+                </div>
+            </fieldset>
+            <button class="btn btn-primary" type="submit" id="saveBtn">Guardar libro</button>
+            <button class="btn btn-success" type="submit" id="updateBtn" style="display: none;">Actualizar libro</button>
+        </form>
+       
+        <h2 class="display-6 fw-bold text-center mt-5 p-4">Registro de libros</h2>
+        <div class="d-flex flex-column flex-md-row align-items-end justify-content-between p-4">
+            <div class="d-flex flex-column justify-content-center">
+                <div class="mb-3">
+                    <button class="btn btn-secondary" id="exportBtn">Exportar a XML</button>
+                </div>
+                <div class="mb-3 me-5">
+                    <input class="form-control" type="file" name="importFile" id="importFile" accept=".xml">
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <input type="search" id="searchBar" class="form-control" placeholder="Buscar libro...">
+                <button id="searchBtn" class="btn btn-outline-secondary" type="button">Buscar</button>
+              </div>
+        </div>
+        
+
+        <div id="data" class="table-responsive mt-3 p-4">
+            <table id="dataTable" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center align-middle" style="width: 30%;">Título</th>
+                        <th class="text-center align-middle" style="width: 30%;">Autor</th>
+                        <th class="text-center align-middle" style="width: 10%;">Año de publicación</th>
+                        <th class="text-center align-middle" style="width: 10%;">Disponibilidad</th>
+                        <th class="text-center align-middle" style="width: 20%;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="bookList"></tbody>
+            </table>
+        </div>
+    </main>
+    <footer class="text-center pt-2 mt-5">
+        <p>&copy; 2025 | Biblioteca Marioneta</p>
+    </footer>
+</body>
+</html>
